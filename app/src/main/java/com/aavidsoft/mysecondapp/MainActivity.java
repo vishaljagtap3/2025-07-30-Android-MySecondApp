@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,18 +17,25 @@ public class MainActivity extends AppCompatActivity {
     private EditText edtMessage;
     private Button btnMessage;
     private Button btnGoToHome;
+    private ImageView imgFlag;
+    private TextView txtCount;
+
+    private int count = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        txtMessage = findViewById(R.id.txtMessage);
-        edtMessage = findViewById(R.id.edtMessage);
-        btnMessage = findViewById(R.id.btnMessage);
-        btnGoToHome = findViewById(R.id.btnGoToHome);
+        initViews();
+        initListeners();
 
+    }
+
+    private void initListeners() {
         btnMessage.setOnClickListener(new BtnMessageOnClickListener());
+
         txtMessage.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -44,10 +53,27 @@ public class MainActivity extends AppCompatActivity {
                                 MainActivity.this,
                                 HomeActivity.class
                         );
-                        startActivity(intent);
+                        intent.putExtra("name", edtMessage.getText().toString());
+                        intent.putExtra("code", 8906);
+
+                        //startActivity(intent);
+                        startActivityForResult(intent, 1);
                     }
                 }
         );
+
+        CountEventListener countEventListener = new CountEventListener();
+        imgFlag.setOnClickListener(countEventListener);
+        txtCount.setOnClickListener(countEventListener);
+    }
+
+    private void initViews() {
+        txtMessage = findViewById(R.id.txtMessage);
+        edtMessage = findViewById(R.id.edtMessage);
+        btnMessage = findViewById(R.id.btnMessage);
+        btnGoToHome = findViewById(R.id.btnGoToHome);
+        imgFlag = findViewById(R.id.imgFlag);
+        txtCount = findViewById(R.id.txtCount);
     }
 
     private class BtnMessageOnClickListener implements View.OnClickListener {
@@ -58,5 +84,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private class CountEventListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            if(view == imgFlag) {
+                txtCount.setText(++count + "");
+            }
+            if(view.getId() == R.id.txtCount) {
+                txtCount.setText(--count + "");
+            }
+        }
+    }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        /*Bundle bundle = data.getExtras();
+        String result = bundle.getString("result");*/
+
+        if(data != null) {
+            String result = data.getExtras().getString("result");
+            txtMessage.setText(result);
+        }
+
+    }
 }

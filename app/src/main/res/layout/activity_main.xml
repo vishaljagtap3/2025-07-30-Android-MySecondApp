@@ -35,4 +35,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <ImageView
+        android:layout_marginTop="32dp"
+        android:id="@+id/imgFlag"
+        android:src="@drawable/flag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:textSize="56dp"
+        android:gravity="center_horizontal"
+        android:text="0"
+        android:id="@+id/txtCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>
