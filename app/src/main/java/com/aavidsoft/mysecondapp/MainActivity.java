@@ -2,17 +2,18 @@ package com.aavidsoft.mysecondapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-
     private TextView txtMessage;
     private EditText edtMessage;
     private Button btnMessage;
@@ -22,15 +23,54 @@ public class MainActivity extends AppCompatActivity {
 
     private int count = 0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Toast.makeText(this, "onCreate", Toast.LENGTH_LONG).show();
+        Log.e("mytag", "my message");
+
         setContentView(R.layout.activity_main);
 
         initViews();
         initListeners();
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Toast.makeText(this, "onStart", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(this, "onResume", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast.makeText(this, "onRestart", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onPause() {
+        Toast.makeText(this, "onPause", Toast.LENGTH_LONG).show();
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Toast.makeText(this, "onStop", Toast.LENGTH_LONG).show();
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Toast.makeText(this, "onDestroy", Toast.LENGTH_LONG).show();
+        super.onDestroy();
     }
 
     private void initListeners() {
